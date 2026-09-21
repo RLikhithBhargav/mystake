@@ -1,0 +1,39 @@
+---
+description: MyStake core product and stack non-negotiables; points agents at architecture and product docs
+alwaysApply: true
+---
+
+# MyStake core
+
+Personal US+IN investment **coaching copilot**. Not a broker. Not auto-trading.
+
+## Canonical docs
+
+- `docs/architecture.md` — system design, hosting, caching, agent overview
+- `docs/product.md` — scope, access, inputs, need/later/never
+- `AGENTS.md` — short index and non-negotiables
+
+Do not re-derive architecture by searching the whole repo when these docs answer the question. If implementation must diverge, update the docs in the same change or ask first.
+
+## Stack locks
+
+- Frontend: Next.js on Vercel (PR previews OK)
+- Auth/DB: Supabase Auth (**Google OAuth**) + Postgres + RLS
+- Access: email **allowlist** + **invite codes** (owner-controlled)
+- API/agents: FastAPI + **self-hosted LangGraph** on always-on host (VPS preferred; not Render free)
+- Models: OpenAI primary → OpenRouter fallback
+- Observability: **LangSmith tracing/evals only** — do not assume LangGraph Platform hosting
+- Markets: US + India; **USD and INR separate**
+- Ingestion v1: CSV + manual holdings only
+
+## Do not
+
+- Clerk, Auth0, or similar paid auth as default
+- Serverless-only hosting for the coach graph
+- Dedicated vector DB in v1 (pgvector later if needed)
+- Plaid / PDF-RAG / auto-trade in v1
+- Ungated public signup without whitelist/invite
+
+## UI note
+
+`docs/ux.md` is deferred. Keep UI simple and functional until UX docs exist; do not invent a large design system unprompted.
