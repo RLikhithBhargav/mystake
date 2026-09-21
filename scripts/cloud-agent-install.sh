@@ -6,6 +6,15 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_root"
 
+# Ensure the Python venv module is available. Some base images ship Python
+# without the split-out `python3-venv`/ensurepip package; install it if missing
+# so `python3 -m venv` works regardless of the base image.
+if ! python3 -c "import ensurepip" >/dev/null 2>&1; then
+  echo "==> Installing python3-venv (ensurepip missing)"
+  sudo apt-get update -qq
+  sudo apt-get install -y -qq python3-venv
+fi
+
 echo "==> Installing JS workspace dependencies (pnpm)"
 corepack enable >/dev/null 2>&1 || true
 pnpm install --frozen-lockfile
