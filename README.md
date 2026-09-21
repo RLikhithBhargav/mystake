@@ -8,19 +8,22 @@ Personal investment **coaching copilot** for US and India markets. Goal- and ris
 
 Next.js (Vercel) · Supabase (Auth + Postgres) · FastAPI + self-hosted LangGraph · OpenAI → OpenRouter fallback · cheap market APIs · LangSmith (tracing/evals)
 
+**Layout:** monorepo (`apps/web`, `apps/api`, …).
+
 ## Docs
 
 | Doc | What it covers |
 |-----|----------------|
 | [Architecture](docs/architecture.md) | System design, agents, hosting, caching |
 | [Product](docs/product.md) | Scope, users, access, need / later / never |
+| [Implementation plan](docs/implementation-plan.md) | Phase-by-phase build order for agents |
 | [AGENTS.md](AGENTS.md) | Short index for coding agents |
 
 UI/UX guidelines and local setup guides will land when the app is scaffolded.
 
 ## Getting started
 
-Application scaffolding is not in the repo yet. When it is, this section will cover clone, env vars, and how to run locally.
+Application scaffolding is not in the repo yet (Phase 0 of the implementation plan). When it is, this section will cover clone, env vars, and how to run locally.
 
 ## Disclaimer
 

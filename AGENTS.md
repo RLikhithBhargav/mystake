@@ -6,12 +6,15 @@ Personal investment **coaching copilot** for US + India markets. Goal- and risk-
 
 Next.js (Vercel) · Supabase (Auth + Postgres) · FastAPI + self-hosted LangGraph (always-on VPS) · OpenAI → OpenRouter fallback · cheap market APIs · LangSmith tracing/evals only
 
+**Layout:** monorepo (`apps/web`, `apps/api`, …).
+
 ## Read first
 
 | Doc | When |
 |-----|------|
 | [`docs/architecture.md`](docs/architecture.md) | System design, hosting, caching, agents overview |
 | [`docs/product.md`](docs/product.md) | Scope, users, access, inputs, need/later/never |
+| [`docs/implementation-plan.md`](docs/implementation-plan.md) | **Phase order** — build step by step; meet exit criteria before advancing |
 
 UI/UX guidelines are intentionally deferred — do not invent a heavy design system until `docs/ux.md` exists.
 
@@ -27,4 +30,4 @@ UI/UX guidelines are intentionally deferred — do not invent a heavy design sys
 
 ## When building
 
-Prefer extending documented decisions over re-deriving architecture from the codebase. If something conflicts with `docs/architecture.md` or `docs/product.md`, update those docs in the same change or ask before diverging.
+Follow [`docs/implementation-plan.md`](docs/implementation-plan.md) **one phase at a time**. Prefer extending documented decisions over re-deriving architecture from the codebase. If something conflicts with architecture, product, or the implementation plan, update those docs in the same change or ask before diverging.

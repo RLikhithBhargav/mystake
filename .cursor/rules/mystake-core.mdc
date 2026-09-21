@@ -1,5 +1,5 @@
 ---
-description: MyStake core product and stack non-negotiables; points agents at architecture and product docs
+description: MyStake core product and stack non-negotiables; points agents at architecture, product, and implementation plan
 alwaysApply: true
 ---
 
@@ -11,12 +11,14 @@ Personal US+IN investment **coaching copilot**. Not a broker. Not auto-trading.
 
 - `docs/architecture.md` — system design, hosting, caching, agent overview
 - `docs/product.md` — scope, access, inputs, need/later/never
+- `docs/implementation-plan.md` — **build order**; one phase at a time; meet exit criteria before the next phase
 - `AGENTS.md` — short index and non-negotiables
 
 Do not re-derive architecture by searching the whole repo when these docs answer the question. If implementation must diverge, update the docs in the same change or ask first.
 
 ## Stack locks
 
+- **Monorepo** layout (`apps/web`, `apps/api`, …)
 - Frontend: Next.js on Vercel (PR previews OK)
 - Auth/DB: Supabase Auth (**Google OAuth**) + Postgres + RLS
 - Access: email **allowlist** + **invite codes** (owner-controlled)
@@ -33,6 +35,7 @@ Do not re-derive architecture by searching the whole repo when these docs answer
 - Dedicated vector DB in v1 (pgvector later if needed)
 - Plaid / PDF-RAG / auto-trade in v1
 - Ungated public signup without whitelist/invite
+- Skip ahead multiple implementation phases in one change unless the user explicitly asks
 
 ## UI note
 

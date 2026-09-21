@@ -1,6 +1,6 @@
 # MyStake — Product
 
-Companion to [`architecture.md`](architecture.md). Product scope and v1 boundaries for agents and humans.
+Companion to [`architecture.md`](architecture.md) and [`implementation-plan.md`](implementation-plan.md). Product scope and v1 boundaries for agents and humans.
 
 ---
 
@@ -88,3 +88,9 @@ Auto-execution, ungated public access, presenting coach output as regulated advi
 ## Success for v1
 
 A whitelisted user can complete onboarding, see their portfolio picture, chat with the coach, get a sized recommendation with a reasoning trail, and save it to a light watchlist — without the system placing any trades.
+
+---
+
+## Build order
+
+See [`implementation-plan.md`](implementation-plan.md) for phased delivery (monorepo Phase 0 onward).
