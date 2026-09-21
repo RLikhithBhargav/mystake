@@ -19,11 +19,40 @@ Next.js (Vercel) · Supabase (Auth + Postgres) · FastAPI + self-hosted LangGrap
 | [Implementation plan](docs/implementation-plan.md) | Phase-by-phase build order for agents |
 | [AGENTS.md](AGENTS.md) | Short index for coding agents |
 
-UI/UX guidelines and local setup guides will land when the app is scaffolded.
+UI/UX guidelines will land as the app matures.
 
 ## Getting started
 
-Application scaffolding is not in the repo yet (Phase 0 of the implementation plan). When it is, this section will cover clone, env vars, and how to run locally.
+The Phase 0 skeleton is in place: a pnpm monorepo with a Next.js web app (`apps/web`) and a
+FastAPI backend (`apps/api`), both bootable locally with no secrets.
+
+**Prerequisites:** Node 20+, pnpm, Python 3.11+ (with `python3-venv`).
+
+```bash
+# From the repo root
+pnpm install                       # JS workspace deps
+
+# Python API venv
+cd apps/api
+python3 -m venv .venv
+.venv/bin/pip install -r requirements-dev.txt
+cd ../..
+
+# Run both apps (in separate shells)
+pnpm dev:web                                                   # web  → http://localhost:3000
+cd apps/api && .venv/bin/uvicorn app.main:app --reload --port 8000   # api → http://localhost:8000
+```
+
+The web home page pings the API's `GET /health` to show the two services are wired together.
+Copy each app's `.env.example` to `.env`/`.env.local` for local config — Phase 0 needs no secrets.
+
+### Checks
+
+```bash
+pnpm lint                 # web (next lint)
+pnpm format:check         # prettier
+cd apps/api && .venv/bin/pytest && .venv/bin/ruff check .
+```
 
 ## Disclaimer
 

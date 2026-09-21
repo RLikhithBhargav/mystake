@@ -1,0 +1,21 @@
+{
+  "name": "mystake",
+  "version": "0.0.0",
+  "private": true,
+  "description": "MyStake — personal investment coaching copilot (monorepo root)",
+  "packageManager": "pnpm@10.33.3",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:web": "pnpm --filter @mystake/web dev",
+    "build:web": "pnpm --filter @mystake/web build",
+    "start:web": "pnpm --filter @mystake/web start",
+    "lint": "pnpm --filter @mystake/web lint",
+    "format": "prettier --write \"apps/web/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"apps/web/**/*.{ts,tsx,js,jsx,json,css,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}
