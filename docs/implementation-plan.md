@@ -21,6 +21,7 @@ Step-by-step build order for agents and humans. Companion to [`architecture.md`]
 - Package managers, lint/format, `.env.example` files (no secrets committed)
 - API `/health` endpoint; web hello/placeholder page
 - Optional: Docker Compose for local API only
+- PR CI (GitHub Actions): web lint/format + API pytest/ruff — not deploy/preview (that is Phase 7)
 
 **Exit criteria:** `apps/web` and `apps/api` boot locally; monorepo structure is the only layout going forward.
 
