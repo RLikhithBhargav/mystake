@@ -54,6 +54,8 @@ pnpm format:check         # prettier
 cd apps/api && .venv/bin/pytest && .venv/bin/ruff check .
 ```
 
+The same checks run on every PR and on pushes to `main` via GitHub Actions (workflow **CI**, required gate job **`ci`**). After the first green run, add check name `ci` under the **Protect main** ruleset → Required status checks.
+
 ## Disclaimer
 
 MyStake is a research and coaching tool for informational purposes only. It is not a broker and not a registered investment advisor. Recommendations are not guarantees; users execute trades elsewhere at their own risk.
