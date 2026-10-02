@@ -191,3 +191,42 @@ a {
   font-size: 14px;
   margin: 12px 0 0;
 }
+
+.field textarea,
+.field select {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.money-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-bottom: 18px;
+}
+
+.step {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.step.active {
+  color: var(--text);
+  font-weight: 600;
+}

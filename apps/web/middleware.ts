@@ -28,7 +28,12 @@ export async function middleware(request: NextRequest) {
     .getAll()
     .some((c) => c.name.includes("auth-token") || c.name.startsWith("sb-"));
 
-  if ((pathname.startsWith("/app") || pathname.startsWith("/admin")) && !hasAuthCookie) {
+  if (
+    (pathname.startsWith("/app") ||
+      pathname.startsWith("/admin") ||
+      pathname.startsWith("/onboarding")) &&
+    !hasAuthCookie
+  ) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", pathname);

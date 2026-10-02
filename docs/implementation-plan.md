@@ -45,10 +45,10 @@ Step-by-step build order for agents and humans. Companion to [`architecture.md`]
 
 **Goal:** Persist the user’s financial picture.
 
-- Onboarding: goals → risk questionnaire → net worth / cash / monthly deploy budget → holdings
-- Manual holdings CRUD
-- CSV import → normalize → holdings
-- Dual currency: USD and INR tracked separately
+- SQL: `portfolio_profiles` + `holdings` (RLS; USD/INR columns and holding currency separate)
+- Onboarding wizard `/onboarding`: goals → risk questionnaire → money → holdings handoff
+- App home `/app` shows saved picture; `/app/holdings` for manual CRUD
+- CSV import → FastAPI `POST /portfolio/csv/normalize` → upsert holdings
 
 **Exit criteria:** User can complete onboarding and see holdings persisted in Supabase.
 
