@@ -18,15 +18,15 @@ Next.js (Vercel) · Supabase (Auth + Postgres) · FastAPI + self-hosted LangGrap
 | [Product](docs/product.md) | Scope, users, access, need / later / never |
 | [Implementation plan](docs/implementation-plan.md) | Phase-by-phase build order for agents |
 | [AGENTS.md](AGENTS.md) | Short index for coding agents |
+| [supabase/README.md](supabase/README.md) | Migrations + Google OAuth setup |
 
 UI/UX guidelines will land as the app matures.
 
 ## Getting started
 
-The Phase 0 skeleton is in place: a pnpm monorepo with a Next.js web app (`apps/web`) and a
-FastAPI backend (`apps/api`), both bootable locally with no secrets.
+pnpm monorepo with Next.js (`apps/web`) and FastAPI (`apps/api`). Phase 1 adds Supabase Auth (Google) + allowlist/invite gate on the web app.
 
-**Prerequisites:** Node 20+, pnpm, Python 3.11+ (with `python3-venv`).
+**Prerequisites:** Node 20+, pnpm, Python 3.11+ (with `python3-venv`), a Supabase project (for auth).
 
 ```bash
 # From the repo root
@@ -38,13 +38,24 @@ python3 -m venv .venv
 .venv/bin/pip install -r requirements-dev.txt
 cd ../..
 
+# Web env (Phase 1)
+cp apps/web/.env.example apps/web/.env.local
+# Fill NEXT_PUBLIC_SUPABASE_*, SUPABASE_SERVICE_ROLE_KEY, OWNER_EMAILS
+# Apply supabase/migrations (see supabase/README.md) and enable Google OAuth
+
 # Run both apps (in separate shells)
 pnpm dev:web                                                   # web  → http://localhost:3000
 cd apps/api && .venv/bin/uvicorn app.main:app --reload --port 8000   # api → http://localhost:8000
 ```
 
-The web home page pings the API's `GET /health` to show the two services are wired together.
-Copy each app's `.env.example` to `.env`/`.env.local` for local config — Phase 0 needs no secrets.
+### Phase 1 access flow
+
+1. Open `/login` → Continue with Google.
+2. If your email is in `OWNER_EMAILS` (and service role is set), you are auto-allowlisted as admin.
+3. Otherwise you land on `/access` until an admin adds your email or you redeem an invite.
+4. Allowlisted users reach `/app`. Admins manage allowlist + invites at `/admin`.
+
+API `.env` is still optional for the Phase 0 `/health` endpoint.
 
 ### Checks
 

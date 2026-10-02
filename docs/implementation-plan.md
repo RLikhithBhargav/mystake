@@ -32,9 +32,10 @@ Step-by-step build order for agents and humans. Companion to [`architecture.md`]
 **Goal:** Only allowlisted / invited users get in.
 
 - Supabase project (dev); Google OAuth via Supabase Auth
-- Tables/policies: `profiles`, `allowlist_emails`, `invites` (names may vary; keep intent)
-- Next.js session + middleware: signed in **and** allowlisted or valid invite redemption
-- Minimal owner/admin path to add emails and create invite codes
+- SQL in `supabase/migrations/`: `profiles`, `allowlist_emails`, `invites` + RLS + access RPCs
+- Next.js session (`@supabase/ssr`) + gate: signed in **and** allowlisted or valid invite redemption
+- Routes: `/login`, `/auth/callback`, `/access` (blocked + redeem), `/app` (shell), `/admin`
+- Minimal owner/admin path to add emails and create invite codes (`OWNER_EMAILS` bootstrap)
 
 **Exit criteria:** Non-allowlisted Google user is blocked; allowlisted user reaches an authenticated shell.
 
