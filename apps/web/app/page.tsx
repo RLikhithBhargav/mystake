@@ -1,20 +1,34 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
+import { resolveAccess } from "@/lib/access";
+import { isSupabaseConfigured } from "@/lib/env";
 import { ApiStatus } from "./api-status";
 
-export default function Home() {
+export default async function Home() {
+  if (isSupabaseConfigured()) {
+    const access = await resolveAccess();
+    if (access?.accessGranted) {
+      redirect("/app");
+    }
+    if (access && !access.accessGranted) {
+      redirect("/access");
+    }
+  }
+
   return (
     <main>
-      <span className="tag">Phase 0 · bootable skeleton</span>
+      <span className="tag">Phase 1 · auth + access gate</span>
       <h1>MyStake</h1>
       <p className="muted">
-        Personal investment coaching copilot for US + India markets. This is the placeholder web
-        shell — onboarding, dashboard, and chat land in later phases.
+        Personal investment coaching copilot for US + India markets. Sign in with Google — access is
+        allowlist- or invite-gated.
       </p>
 
-      <div className="card">
-        <div className="status-row">
-          <span className="dot ok" />
-          <span>Next.js web app is running.</span>
-        </div>
+      <div className="card actions-row">
+        <Link href="/login" className="btn">
+          Sign in
+        </Link>
       </div>
 
       <div className="card">
