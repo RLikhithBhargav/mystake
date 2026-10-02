@@ -3,11 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app import __version__
 from app.config import settings
+from app.portfolio.csv_normalize import normalize_csv
+from app.portfolio.schemas import CsvNormalizeRequest, CsvNormalizeResponse
 
 app = FastAPI(
     title="MyStake API",
     version=__version__,
-    description="FastAPI + LangGraph coach backend (Phase 0 skeleton).",
+    description="FastAPI + LangGraph coach backend.",
 )
 
 app.add_middleware(
@@ -28,3 +30,10 @@ def health() -> dict[str, str]:
 @app.get("/")
 def root() -> dict[str, str]:
     return {"service": settings.service_name, "docs": "/docs", "health": "/health"}
+
+
+@app.post("/portfolio/csv/normalize", response_model=CsvNormalizeResponse)
+def portfolio_csv_normalize(body: CsvNormalizeRequest) -> CsvNormalizeResponse:
+    """Parse a brokerage-like CSV into normalized holdings (no persistence)."""
+    result = normalize_csv(body.csv_text)
+    return CsvNormalizeResponse(**result)

@@ -6,6 +6,8 @@ SQL migrations for Auth, Postgres, and RLS. Apply to a **dev** Supabase project 
 
 **Option A — SQL editor:** open the Supabase dashboard → SQL → paste and run files in `migrations/` in filename order.
 
+Phase 2 adds `portfolio_profiles` + `holdings` (`20261002010000_phase2_portfolio.sql`) — run it after Phase 1 if your project already has auth tables.
+
 **Option B — CLI:** link the project and run `supabase db push` (requires [Supabase CLI](https://supabase.com/docs/guides/cli) and a linked project).
 
 ## Auth setup (Google OAuth)

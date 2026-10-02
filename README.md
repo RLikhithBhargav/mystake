@@ -48,14 +48,15 @@ pnpm dev:web                                                   # web  → http:/
 cd apps/api && .venv/bin/uvicorn app.main:app --reload --port 8000   # api → http://localhost:8000
 ```
 
-### Phase 1 access flow
+### Access + portfolio flow
 
 1. Open `/login` → Continue with Google.
 2. If your email is in `OWNER_EMAILS` (and service role is set), you are auto-allowlisted as admin.
 3. Otherwise you land on `/access` until an admin adds your email or you redeem an invite.
-4. Allowlisted users reach `/app`. Admins manage allowlist + invites at `/admin`.
+4. First visit after access → `/onboarding` (goals → risk → money → holdings).
+5. Then `/app` shows your picture; `/app/holdings` for manual CRUD + CSV (API must be running for CSV normalize).
 
-API `.env` is still optional for the Phase 0 `/health` endpoint.
+Apply **both** Supabase migrations in `supabase/migrations/` (Phase 1 auth, then Phase 2 portfolio).
 
 ### Checks
 
