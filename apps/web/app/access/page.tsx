@@ -22,21 +22,24 @@ export default async function AccessPage() {
 
   return (
     <main>
-      <span className="tag">Access required</span>
-      <h1>You’re signed in, but not allowlisted</h1>
-      <p className="muted">
-        Signed in as <strong>{access.email}</strong>. Ask the owner to add your email, or redeem an
-        invite code below.
-      </p>
+      <div className="page-hero">
+        <span className="page-kicker">Access required</span>
+        <h1>Signed in, not allowlisted</h1>
+        <p className="lede">
+          You’re in as <strong>{access.email}</strong>. Ask the owner to add your email, or redeem
+          an invite code below.
+        </p>
+      </div>
 
       <div className="card">
         <h2 className="section-title">Redeem invite</h2>
+        <p className="section-sub">Single-use codes unlock access for your account.</p>
         <InviteRedeemForm />
       </div>
 
-      <div className="card actions-row">
+      <div className="card card-quiet actions-row">
         <SignOutButton />
-        <Link href="/login" className="muted">
+        <Link href="/login" className="btn btn-ghost">
           Use a different account
         </Link>
       </div>
