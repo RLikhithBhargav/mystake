@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { AppNav } from "@/components/app-nav";
 import { resolveAccess } from "@/lib/access";
 import { isSupabaseConfigured } from "@/lib/env";
 import { riskLabel } from "@/lib/portfolio";
 import { getPortfolioProfile, listHoldings } from "@/lib/portfolio-data";
 import { ApiStatus } from "../api-status";
-import { SignOutButton } from "../sign-out-button";
 
 export default async function AppShellPage() {
   if (!isSupabaseConfigured()) {
@@ -32,46 +32,64 @@ export default async function AppShellPage() {
 
   return (
     <main>
-      <span className="tag">Portfolio home</span>
-      <h1>MyStake</h1>
-      <p className="muted">
-        Signed in as <strong>{access.email}</strong>
-        {access.isAdmin ? " · admin" : ""}.
-      </p>
+      <AppNav email={access.email} isAdmin={access.isAdmin} active="home" />
 
-      <div className="card">
-        <h2 className="section-title">Your picture</h2>
-        <p style={{ marginTop: 0 }}>{profile.goals_text}</p>
-        <p className="muted">
-          Risk: {profile.risk_score ?? "—"} ({riskLabel(profile.risk_score)}) · Cash USD{" "}
-          {profile.cash_usd} / INR {profile.cash_inr} · Monthly deploy USD{" "}
-          {profile.monthly_deploy_usd} / INR {profile.monthly_deploy_inr}
-        </p>
-        <p className="muted">
-          Holdings: {usdCount} USD · {inrCount} INR ({holdings.length} total)
+      <div className="page-hero">
+        <span className="page-kicker">Your picture</span>
+        <h1>Ready when you are</h1>
+        <p className="lede">
+          Goals, risk, and dual-currency cash on file. Coach chat lands later — keep holdings
+          current so recommendations have something real to work with.
         </p>
       </div>
 
-      <div className="card actions-row">
-        <Link href="/app/holdings" className="btn">
-          Manage holdings
-        </Link>
-        <Link href="/onboarding" className="btn btn-secondary">
-          Review onboarding
-        </Link>
-        {access.isAdmin ? (
-          <Link href="/admin" className="btn btn-secondary">
-            Admin
+      <div className="stat-row">
+        <div className="stat">
+          <span className="stat-label">Risk</span>
+          <span className="stat-value">{profile.risk_score ?? "—"}</span>
+          <span className="muted" style={{ fontSize: 13 }}>
+            {riskLabel(profile.risk_score)}
+          </span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">USD holdings</span>
+          <span className="stat-value us">{usdCount}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">INR holdings</span>
+          <span className="stat-value in">{inrCount}</span>
+        </div>
+        <div className="stat">
+          <span className="stat-label">Monthly deploy</span>
+          <span className="stat-value" style={{ fontSize: "1.15rem", lineHeight: 1.35 }}>
+            ${profile.monthly_deploy_usd}
+            <br />₹{profile.monthly_deploy_inr}
+          </span>
+        </div>
+      </div>
+
+      <section className="card">
+        <h2 className="section-title">Goals</h2>
+        <p className="goal-quote">{profile.goals_text}</p>
+        <p className="muted" style={{ margin: 0 }}>
+          Cash on hand — USD {profile.cash_usd} · INR {profile.cash_inr}. Net worth — USD{" "}
+          {profile.net_worth_usd} · INR {profile.net_worth_inr}.
+        </p>
+        <div className="actions-row" style={{ marginTop: 18 }}>
+          <Link href="/app/holdings" className="btn">
+            Manage holdings
           </Link>
-        ) : null}
-        <SignOutButton />
-      </div>
+          <Link href="/onboarding" className="btn btn-secondary">
+            Edit profile
+          </Link>
+        </div>
+      </section>
 
-      <div className="card">
+      <section className="card card-quiet">
         <ApiStatus />
-      </div>
+      </section>
 
-      <p className="muted" style={{ marginTop: 24, fontSize: 13 }}>
+      <p className="disclaimer">
         Not a broker and not registered investment advice — informational coaching only.
       </p>
     </main>

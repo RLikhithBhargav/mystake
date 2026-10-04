@@ -1,9 +1,8 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { AppNav } from "@/components/app-nav";
 import { resolveAccess } from "@/lib/access";
 import { isSupabaseConfigured } from "@/lib/env";
-import { SignOutButton } from "../sign-out-button";
 
 import { AdminPanel } from "./admin-panel";
 import { listAllowlist, listInvites } from "./actions";
@@ -28,20 +27,17 @@ export default async function AdminPage() {
 
   return (
     <main>
-      <span className="tag">Owner admin</span>
-      <h1>Access control</h1>
-      <p className="muted">
-        Add allowlisted emails and create single-use invite codes. Signed in as {access.email}.
-      </p>
+      <AppNav email={access.email} isAdmin={access.isAdmin} active="admin" />
+
+      <div className="page-hero">
+        <span className="page-kicker">Owner</span>
+        <h1>Access control</h1>
+        <p className="lede">
+          Allowlist emails and create single-use invite codes. Signed in as {access.email}.
+        </p>
+      </div>
 
       <AdminPanel initialAllowlist={allowlist} initialInvites={invites} />
-
-      <div className="card actions-row">
-        <Link href="/app" className="btn btn-secondary">
-          Back to app
-        </Link>
-        <SignOutButton />
-      </div>
     </main>
   );
 }
