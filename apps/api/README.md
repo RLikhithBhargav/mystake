@@ -1,20 +1,16 @@
 # MyStake API
 
-FastAPI backend. Hosts CSV normalize, market quotes (Phase 3), and later the self-hosted LangGraph coach.
+FastAPI backend: CSV normalize, market quotes, and a self-hosted LangGraph coach.
 
 ## Local development
-
-From the repo root, a Python virtualenv lives at `apps/api/.venv`.
 
 ```bash
 cd apps/api
 python3 -m venv .venv
 .venv/bin/pip install -r requirements-dev.txt
 
-# Run the dev server
 .venv/bin/uvicorn app.main:app --reload --port 8000
 
-# Run tests / lint
 .venv/bin/pytest
 .venv/bin/ruff check .
 ```
@@ -24,8 +20,9 @@ python3 -m venv .venv
 | Method | Path | Notes |
 |--------|------|--------|
 | GET | `/health` | Liveness |
-| POST | `/portfolio/csv/normalize` | Parse holdings CSV (no persistence) |
+| POST | `/portfolio/csv/normalize` | Parse holdings CSV |
 | POST | `/market/quotes` | Cache-aware US/IN quotes |
+| POST | `/coach/run` | Auth’d LangGraph coach (Bearer Supabase JWT) |
 
 Interactive docs: `/docs`.
 
@@ -33,6 +30,8 @@ Interactive docs: `/docs`.
 
 Copy `.env.example` to `.env`.
 
-- Without Supabase keys: quotes use **in-memory** cache (fine for solo local testing).
-- With `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`: quotes persist in `market_quotes` (apply Phase 3 migration first).
-- Optional `ALPHA_VANTAGE_API_KEY` for US; Yahoo is the default for US + India (`.NS`).
+**Coach needs:** `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_ANON_KEY` (to validate the user JWT and load/persist portfolio + `coach_runs`).
+
+**LLM (optional):** `OPENAI_API_KEY` and/or `OPENROUTER_API_KEY`. Without keys the graph still runs with a deterministic synthesis (good for local/CI).
+
+**LangSmith (optional):** `LANGSMITH_API_KEY` + `LANGSMITH_PROJECT` — traces only, not LangGraph Platform hosting.

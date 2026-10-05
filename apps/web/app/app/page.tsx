@@ -7,6 +7,7 @@ import { isSupabaseConfigured } from "@/lib/env";
 import { riskLabel } from "@/lib/portfolio";
 import { getPortfolioProfile, listHoldings } from "@/lib/portfolio-data";
 import { ApiStatus } from "../api-status";
+import { CoachRunner } from "./coach-runner";
 
 export default async function AppShellPage() {
   if (!isSupabaseConfigured()) {
@@ -38,8 +39,8 @@ export default async function AppShellPage() {
         <span className="page-kicker">Your picture</span>
         <h1>Ready when you are</h1>
         <p className="lede">
-          Goals, risk, and dual-currency cash on file. Coach chat lands later — keep holdings
-          current so recommendations have something real to work with.
+          Goals, risk, and dual-currency cash on file. Run the API coach below for a sized idea with
+          a visible reasoning trail — chat chrome lands in Phase 5.
         </p>
       </div>
 
@@ -76,7 +77,7 @@ export default async function AppShellPage() {
           {profile.net_worth_usd} · INR {profile.net_worth_inr}.
         </p>
         <div className="actions-row" style={{ marginTop: 18 }}>
-          <Link href="/app/holdings" className="btn">
+          <Link href="/app/holdings" className="btn btn-secondary">
             Manage holdings
           </Link>
           <Link href="/onboarding" className="btn btn-secondary">
@@ -84,6 +85,8 @@ export default async function AppShellPage() {
           </Link>
         </div>
       </section>
+
+      <CoachRunner />
 
       <section className="card card-quiet">
         <ApiStatus />

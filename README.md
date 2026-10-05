@@ -69,6 +69,19 @@ QUOTE_CACHE_TTL_SECONDS=600
 
 `POST /market/quotes` returns prices; repeats within TTL are cache hits. Holdings page shows marks and hit/miss counts.
 
+### Coach (Phase 4)
+
+```bash
+# apps/api/.env — add to Phase 3 Supabase vars
+SUPABASE_ANON_KEY=...          # JWT user lookup (same anon key as web)
+OPENAI_API_KEY=...             # optional; else deterministic coach
+# OPENROUTER_API_KEY=...       # fallback
+LANGSMITH_API_KEY=...          # optional tracing
+LANGSMITH_PROJECT=mystake
+```
+
+Apply the Phase 4 migration, restart the API, sign in, and click **Run coach** on `/app`. `POST /coach/run` with `Authorization: Bearer <access_token>` returns a recommendation + reasoning trail.
+
 ### Checks
 
 ```bash

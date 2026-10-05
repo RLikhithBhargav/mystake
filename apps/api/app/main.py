@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import __version__
+from app.auth.supabase_auth import AuthUser, require_user
+from app.coach.schemas import CoachRunRequest, CoachRunResponse
+from app.coach.service import run_coach_for_user
 from app.config import settings
 from app.market.deps import get_quote_service
 from app.market.schemas import QuotesRequest, QuotesResponse
@@ -11,7 +14,7 @@ from app.portfolio.schemas import CsvNormalizeRequest, CsvNormalizeResponse
 app = FastAPI(
     title="MyStake API",
     version=__version__,
-    description="FastAPI + LangGraph coach backend.",
+    description="FastAPI + self-hosted LangGraph coach backend.",
 )
 
 app.add_middleware(
@@ -36,6 +39,7 @@ def root() -> dict[str, str]:
         "docs": "/docs",
         "health": "/health",
         "quotes": "/market/quotes",
+        "coach": "/coach/run",
     }
 
 
@@ -51,3 +55,16 @@ def market_quotes(body: QuotesRequest) -> QuotesResponse:
     """Return prices for symbols; serves from Postgres/memory cache within TTL."""
     service = get_quote_service()
     return service.get_quotes(body.symbols, force_refresh=body.force_refresh)
+
+
+@app.post("/coach/run", response_model=CoachRunResponse)
+def coach_run(
+    body: CoachRunRequest,
+    user: AuthUser = Depends(require_user),  # noqa: B008
+) -> CoachRunResponse:
+    """Run the LangGraph coach synchronously for the authenticated user."""
+    return run_coach_for_user(
+        user.id,
+        force_refresh_quotes=body.force_refresh_quotes,
+        use_seed_portfolio=body.use_seed_portfolio,
+    )
