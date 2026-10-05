@@ -10,6 +10,8 @@ Phase 2 adds `portfolio_profiles` + `holdings` (`20261002010000_phase2_portfolio
 
 Phase 3 adds `market_quotes` + `market_fundamentals` (`20261005000000_phase3_market_cache.sql`). Point the API at Supabase with `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` so quote cache is shared (otherwise the API uses in-memory cache).
 
+Phase 4 adds `coach_runs` (`20261005010000_phase4_coach_runs.sql`). The API persists runs with the service role; users can `select` their own rows via RLS.
+
 **Option B — CLI:** link the project and run `supabase db push` (requires [Supabase CLI](https://supabase.com/docs/guides/cli) and a linked project).
 
 ## Auth setup (Google OAuth)

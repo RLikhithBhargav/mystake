@@ -72,13 +72,13 @@ Step-by-step build order for agents and humans. Companion to [`architecture.md`]
 
 **Goal:** Real coach runs before polishing chat chrome.
 
+- SQL: `coach_runs` (recommendation + reasoning trail + portfolio snapshot)
 - Self-hosted LangGraph: portfolio analyst → market screener → risk/sizing → debate/synthesis
-- Shared state schema; persist recommendation + reasoning trail
-- OpenAI primary → OpenRouter fallback
-- LangSmith tracing (and basic evals) enabled
-- Sync HTTP “run coach” first; async job queue only if needed later
+- Sync `POST /coach/run` (Bearer Supabase JWT); OpenAI primary → OpenRouter fallback; deterministic fallback without keys
+- LangSmith tracing when `LANGSMITH_API_KEY` set
+- Minimal **Run coach** control on `/app` (chat chrome is Phase 5)
 
-**Exit criteria:** Authenticated API call returns a recommendation + visible reasoning for a seeded portfolio; run appears in LangSmith.
+**Exit criteria:** Authenticated API call returns a recommendation + visible reasoning for a seeded portfolio; run appears in LangSmith (when tracing key configured).
 
 ---
 

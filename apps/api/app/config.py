@@ -10,11 +10,23 @@ class Settings(BaseSettings):
     # Comma-separated list of allowed CORS origins for the web app.
     cors_origins: str = "http://localhost:3000"
 
-    # Phase 3 — market data cache (Supabase Postgres via PostgREST)
+    # Supabase (quotes cache + coach portfolio load / persist / JWT user lookup)
     supabase_url: str = ""
     supabase_service_role_key: str = ""
+    supabase_anon_key: str = ""
+
     quote_cache_ttl_seconds: int = 600  # 10 minutes
     alpha_vantage_api_key: str = ""
+
+    # Phase 4 — LLM + LangSmith
+    openai_api_key: str = ""
+    openai_model: str = "gpt-4o-mini"
+    openrouter_api_key: str = ""
+    openrouter_model: str = "openai/gpt-4o-mini"
+    langsmith_api_key: str = ""
+    langsmith_project: str = "mystake"
+    # Allow POST /coach/run with use_seed_portfolio for local smoke tests
+    coach_allow_seed_portfolio: bool = False
 
     @property
     def cors_origin_list(self) -> list[str]:
