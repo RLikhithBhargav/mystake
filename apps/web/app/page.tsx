@@ -18,12 +18,14 @@ export default async function Home() {
 
   return (
     <main>
-      <span className="tag">Phase 1 · auth + access gate</span>
-      <h1>MyStake</h1>
-      <p className="muted">
-        Personal investment coaching copilot for US + India markets. Sign in with Google — access is
-        allowlist- or invite-gated.
-      </p>
+      <div className="page-hero">
+        <span className="page-kicker">US + India coaching</span>
+        <h1>MyStake</h1>
+        <p className="lede">
+          Personal investment coaching copilot. Sign in with Google — access is allowlist- or
+          invite-gated.
+        </p>
+      </div>
 
       <div className="card actions-row">
         <Link href="/login" className="btn">
@@ -31,11 +33,11 @@ export default async function Home() {
         </Link>
       </div>
 
-      <div className="card">
+      <div className="card card-quiet">
         <ApiStatus />
       </div>
 
-      <p className="muted" style={{ marginTop: 24, fontSize: 13 }}>
+      <p className="disclaimer">
         Not a broker and not registered investment advice — informational coaching only.
       </p>
     </main>

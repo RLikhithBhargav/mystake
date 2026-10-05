@@ -25,15 +25,17 @@ export default async function LoginPage({
 
   return (
     <main>
-      <span className="tag">Phase 1 · access gate</span>
-      <h1>MyStake</h1>
-      <p className="muted">
-        Sign in with Google. Access is limited to allowlisted emails or a valid invite code.
-      </p>
+      <div className="page-hero">
+        <span className="page-kicker">Access gate</span>
+        <h1>MyStake</h1>
+        <p className="lede">
+          Sign in with Google. Access is limited to allowlisted emails or a valid invite code.
+        </p>
+      </div>
 
       <div className="card">
         {!isSupabaseConfigured() ? (
-          <p className="muted">
+          <p className="muted" style={{ margin: 0 }}>
             Supabase is not configured. Copy <code>apps/web/.env.example</code> to{" "}
             <code>.env.local</code>, add your project URL and anon key, and apply{" "}
             <code>supabase/migrations</code>. See <code>supabase/README.md</code>.
@@ -50,7 +52,7 @@ export default async function LoginPage({
         )}
       </div>
 
-      <p className="muted" style={{ marginTop: 24, fontSize: 13 }}>
+      <p className="disclaimer">
         <Link href="/">Back</Link> · Not a broker — informational coaching only.
       </p>
     </main>
