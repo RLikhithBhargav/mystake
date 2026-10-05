@@ -58,9 +58,11 @@ Step-by-step build order for agents and humans. Companion to [`architecture.md`]
 
 **Goal:** Cheap APIs without burning rate limits.
 
-- Adapters for US + India free/cheap market data
-- Postgres cache tables + TTLs (quotes, light fundamentals)
-- API: fetch quotes (cache-aware); test that repeats hit cache within TTL
+- SQL: `market_quotes` + `market_fundamentals` cache tables (TTL via `expires_at`)
+- Adapters: Yahoo for US + India (`.NS`); optional Alpha Vantage for US
+- API `POST /market/quotes` — cache-aware (Supabase Postgres when configured, else memory)
+- Web holdings page shows live marks + cache hit/miss counts
+- Tests: second request within TTL is a cache hit (no second adapter call)
 
 **Exit criteria:** Repeated quote requests are served from cache within TTL; refresh spam does not exhaust API quotas.
 

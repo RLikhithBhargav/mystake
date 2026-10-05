@@ -8,6 +8,8 @@ SQL migrations for Auth, Postgres, and RLS. Apply to a **dev** Supabase project 
 
 Phase 2 adds `portfolio_profiles` + `holdings` (`20261002010000_phase2_portfolio.sql`) — run it after Phase 1 if your project already has auth tables.
 
+Phase 3 adds `market_quotes` + `market_fundamentals` (`20261005000000_phase3_market_cache.sql`). Point the API at Supabase with `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` so quote cache is shared (otherwise the API uses in-memory cache).
+
 **Option B — CLI:** link the project and run `supabase db push` (requires [Supabase CLI](https://supabase.com/docs/guides/cli) and a linked project).
 
 ## Auth setup (Google OAuth)
