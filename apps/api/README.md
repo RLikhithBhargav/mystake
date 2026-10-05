@@ -1,6 +1,6 @@
 # MyStake API
 
-FastAPI backend (Phase 0 skeleton). Hosts the self-hosted LangGraph coach in later phases.
+FastAPI backend. Hosts CSV normalize, market quotes (Phase 3), and later the self-hosted LangGraph coach.
 
 ## Local development
 
@@ -19,6 +19,20 @@ python3 -m venv .venv
 .venv/bin/ruff check .
 ```
 
-Endpoints: `GET /health`, `GET /`, and interactive docs at `/docs`.
+### Endpoints
 
-Copy `.env.example` to `.env` for local config. No secrets are required to boot Phase 0.
+| Method | Path | Notes |
+|--------|------|--------|
+| GET | `/health` | Liveness |
+| POST | `/portfolio/csv/normalize` | Parse holdings CSV (no persistence) |
+| POST | `/market/quotes` | Cache-aware US/IN quotes |
+
+Interactive docs: `/docs`.
+
+### Env
+
+Copy `.env.example` to `.env`.
+
+- Without Supabase keys: quotes use **in-memory** cache (fine for solo local testing).
+- With `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`: quotes persist in `market_quotes` (apply Phase 3 migration first).
+- Optional `ALPHA_VANTAGE_API_KEY` for US; Yahoo is the default for US + India (`.NS`).

@@ -6,6 +6,7 @@ import { isSupabaseConfigured } from "@/lib/env";
 import { getPortfolioProfile, listHoldings } from "@/lib/portfolio-data";
 
 import { HoldingsManager } from "./holdings-manager";
+import { HoldingsQuotes } from "./holdings-quotes";
 
 export default async function HoldingsPage() {
   if (!isSupabaseConfigured()) redirect("/login");
@@ -30,10 +31,11 @@ export default async function HoldingsPage() {
         <h1>Holdings</h1>
         <p className="lede">
           Enter positions by hand or import a brokerage-style CSV. Download the sample file if you
-          need a format reference — USD and INR stay separate.
+          need a format reference — USD and INR stay separate. Quotes are cache-aware via the API.
         </p>
       </div>
 
+      <HoldingsQuotes holdings={holdings} />
       <HoldingsManager initialHoldings={holdings} />
     </main>
   );

@@ -54,9 +54,20 @@ cd apps/api && .venv/bin/uvicorn app.main:app --reload --port 8000   # api → h
 2. If your email is in `OWNER_EMAILS` (and service role is set), you are auto-allowlisted as admin.
 3. Otherwise you land on `/access` until an admin adds your email or you redeem an invite.
 4. First visit after access → `/onboarding` (goals → risk → money → holdings).
-5. Then `/app` shows your picture; `/app/holdings` for manual CRUD + CSV (API must be running for CSV normalize).
+5. Then `/app` shows your picture; `/app/holdings` for manual CRUD + CSV (API must be running for CSV normalize + quotes).
 
-Apply **both** Supabase migrations in `supabase/migrations/` (Phase 1 auth, then Phase 2 portfolio).
+Apply Supabase migrations in `supabase/migrations/` in filename order (auth → portfolio → market cache).
+
+### Market quotes (Phase 3)
+
+```bash
+# apps/api/.env — optional but recommended for shared Postgres cache
+SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=...
+QUOTE_CACHE_TTL_SECONDS=600
+```
+
+`POST /market/quotes` returns prices; repeats within TTL are cache hits. Holdings page shows marks and hit/miss counts.
 
 ### Checks
 
